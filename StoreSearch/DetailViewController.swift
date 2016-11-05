@@ -17,7 +17,8 @@ class DetailViewController: UIViewController {
   @IBOutlet weak var kindLabel: UILabel!
   @IBOutlet weak var genreLabel: UILabel!
   @IBOutlet weak var priceButton: UIButton!
-
+  @IBOutlet weak var tagNameLabel: UILabel!
+    
   var searchResult: SearchResult! {
     didSet {
       if isViewLoaded {
@@ -103,7 +104,7 @@ class DetailViewController: UIViewController {
     let priceText: String
     if searchResult.price == 0 {
       priceText = NSLocalizedString("Free", comment: "Price: Free")
-    } else if let text = formatter.string(from: searchResult.price) {
+    } else if let text = formatter.string(from: searchResult.price as NSNumber) {
       priceText = text
     } else {
       priceText = ""
@@ -124,7 +125,7 @@ class DetailViewController: UIViewController {
     }
   }
   
-  override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?){
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "ShowMenu" {
       let controller = segue.destination as! MenuViewController
       controller.delegate = self

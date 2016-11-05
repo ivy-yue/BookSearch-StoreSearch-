@@ -23,6 +23,7 @@ class SearchResult {
   var currency = ""
   var price = 0.0
   var genre = ""
+  var tagNameLabel = ""
   
   func kindForDisplay() -> String {
     return displayNamesForKind[kind] ?? kind

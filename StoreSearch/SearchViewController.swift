@@ -67,7 +67,7 @@ class SearchViewController: UIViewController {
     present(alert, animated: true, completion: nil)
   }
   
-  override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?){
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "ShowDetail" {
       if case .results(let list) = search.state {
         let detailViewController = segue.destination as! DetailViewController

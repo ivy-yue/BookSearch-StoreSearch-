@@ -18,7 +18,7 @@ class GradientView: UIView {
     let locations: [CGFloat] = [ 0, 1 ]
 
     let colorSpace = CGColorSpaceCreateDeviceRGB()
-    let gradient = CGGradient(colorComponentsSpace: colorSpace, components: components, locations: locations, count: 2)
+    let gradient = CGGradient(colorSpace: colorSpace, colorComponents: components, locations: locations, count: 2)
     let x = bounds.midX
     let y = bounds.midY
     let centerPoint = CGPoint(x: x, y : y)

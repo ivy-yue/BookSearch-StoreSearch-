@@ -6,7 +6,7 @@ class FadeOutAnimationController: NSObject, UIViewControllerAnimatedTransitionin
   }
   
   func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-    if let fromView = transitionContext.view( forKey: UITransitionContextFromViewKey) {
+    if let fromView = transitionContext.view( forKey: UITransitionContextViewKey.from) {
       let duration = transitionDuration(using: transitionContext)
       UIView.animate(withDuration: duration, animations: {
         fromView.alpha = 0
