@@ -52,7 +52,8 @@ class DetailViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.tintColor = UIColor(red: 255/255, green: 215/255, blue: 0/255, alpha: 1)
+    //close button
+    view.tintColor = UIColor(red: 255/255, green: 129/255, blue: 98/255, alpha: 1)
     popupView.layer.cornerRadius = 10
     
     if isPopUp {

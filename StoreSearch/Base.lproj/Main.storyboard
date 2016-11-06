@@ -27,6 +27,7 @@
                                 </connections>
                             </tableView>
                             <searchBar contentMode="redraw" placeholder="Best-sellers, isbn, book name, e-book" translatesAutoresizingMaskIntoConstraints="NO" id="68e-CH-NSs">
+                                <color key="barTintColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="QXF-df-sgz"/>
@@ -160,27 +161,15 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BFJ-Pm-mJM" userLabel="Pop-up View">
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qwn-fr-TaF" userLabel="Close Button">
-                                        <frame key="frameInset" minX="12" minY="6" width="15" height="22"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qwn-fr-TaF" userLabel="Close Button">
+                                        <frame key="frameInset" minX="10" minY="9" width="15" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="CloseButton"/>
                                         <connections>
                                             <action selector="close" destination="bMo-v0-teP" eventType="touchUpInside" id="j3u-cY-uit"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xOH-GC-bHs">
-                                        <frame key="frameInset" minX="208" minY="370" width="80" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="24" id="62F-8O-Dr5"/>
-                                            <constraint firstAttribute="width" constant="80" id="zjw-3O-wus"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                        <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                        <state key="normal" title="$9.99" backgroundImage="PriceButton"/>
-                                        <connections>
-                                            <action selector="openInStore" destination="bMo-v0-teP" eventType="touchUpInside" id="8XO-gM-Jxj"/>
-                                        </connections>
-                                    </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="USATodayLogo" translatesAutoresizingMaskIntoConstraints="NO" id="CT9-CK-dqj">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="不喜欢" translatesAutoresizingMaskIntoConstraints="NO" id="CT9-CK-dqj">
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="BIh-ej-C5w">
                                                 <variation key="heightClass=regular-widthClass=regular" constant="180"/>
@@ -246,10 +235,22 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         </variation>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xOH-GC-bHs">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="62F-8O-Dr5"/>
+                                            <constraint firstAttribute="width" constant="80" id="zjw-3O-wus"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                                        <state key="normal" title="$9.99" backgroundImage="PriceButton"/>
+                                        <connections>
+                                            <action selector="openInStore" destination="bMo-v0-teP" eventType="touchUpInside" id="8XO-gM-Jxj"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.94649537852112675" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="xOH-GC-bHs" secondAttribute="bottom" constant="6" id="1SW-rW-odA"/>
+                                    <constraint firstAttribute="bottom" secondItem="xOH-GC-bHs" secondAttribute="bottom" constant="14" id="1SW-rW-odA"/>
                                     <constraint firstItem="7sM-UJ-kWH" firstAttribute="baseline" secondItem="ZYp-Zw-Fg6" secondAttribute="baseline" id="1WF-KD-7z4"/>
                                     <constraint firstItem="Ph9-wm-1LS" firstAttribute="leading" secondItem="DCQ-US-EVg" secondAttribute="leading" id="1h1-Pu-MRU"/>
                                     <constraint firstItem="7sM-UJ-kWH" firstAttribute="top" secondItem="yz2-Gh-kzt" secondAttribute="bottom" constant="2" id="2e7-mB-4hM"/>
@@ -258,26 +259,23 @@
                                     <constraint firstItem="Ph9-wm-1LS" firstAttribute="top" secondItem="BFJ-Pm-mJM" secondAttribute="top" constant="142" id="D7Q-xZ-X5V"/>
                                     <constraint firstItem="CT9-CK-dqj" firstAttribute="centerX" secondItem="7sM-UJ-kWH" secondAttribute="centerX" id="JTD-se-kb1"/>
                                     <constraint firstItem="7sM-UJ-kWH" firstAttribute="trailing" secondItem="Ph9-wm-1LS" secondAttribute="trailing" id="JTZ-QE-y8B"/>
-                                    <constraint firstItem="7sM-UJ-kWH" firstAttribute="leading" secondItem="ZYp-Zw-Fg6" secondAttribute="trailing" constant="9" id="Jft-kV-TJ7"/>
+                                    <constraint firstItem="7sM-UJ-kWH" firstAttribute="leading" secondItem="ZYp-Zw-Fg6" secondAttribute="trailing" constant="15" id="Jft-kV-TJ7"/>
                                     <constraint firstItem="7sM-UJ-kWH" firstAttribute="leading" secondItem="yz2-Gh-kzt" secondAttribute="leading" id="PnD-5x-V7d"/>
                                     <constraint firstItem="Ph9-wm-1LS" firstAttribute="leading" secondItem="BFJ-Pm-mJM" secondAttribute="leading" constant="10" id="QD1-BM-PEl"/>
                                     <constraint firstItem="Ph9-wm-1LS" firstAttribute="leading" secondItem="ZYp-Zw-Fg6" secondAttribute="leading" id="S2d-Km-Ory"/>
                                     <constraint firstItem="DCQ-US-EVg" firstAttribute="baseline" secondItem="yz2-Gh-kzt" secondAttribute="baseline" id="YCt-jr-NUf"/>
                                     <constraint firstItem="7sM-UJ-kWH" firstAttribute="trailing" secondItem="JVj-dj-Iz8" secondAttribute="trailing" id="YRT-p9-XQt"/>
                                     <constraint firstItem="Ph9-wm-1LS" firstAttribute="leading" secondItem="JVj-dj-Iz8" secondAttribute="leading" id="ZBp-6w-u0z"/>
-                                    <constraint firstItem="CT9-CK-dqj" firstAttribute="leading" secondItem="Qwn-fr-TaF" secondAttribute="trailing" constant="82" id="Zae-4B-JLV"/>
                                     <constraint firstItem="JVj-dj-Iz8" firstAttribute="top" secondItem="CT9-CK-dqj" secondAttribute="bottom" constant="6" id="c5e-iF-nG0"/>
                                     <constraint firstAttribute="trailing" secondItem="7sM-UJ-kWH" secondAttribute="trailing" constant="70" id="eBK-fc-niv"/>
                                     <constraint firstItem="yz2-Gh-kzt" firstAttribute="leading" secondItem="DCQ-US-EVg" secondAttribute="trailing" constant="17" id="fmW-Uo-tDc"/>
-                                    <constraint firstAttribute="trailing" secondItem="xOH-GC-bHs" secondAttribute="trailing" constant="20" id="gly-RF-Jh8"/>
+                                    <constraint firstAttribute="trailing" secondItem="xOH-GC-bHs" secondAttribute="trailing" constant="8" id="gly-RF-Jh8"/>
                                     <constraint firstItem="Ph9-wm-1LS" firstAttribute="top" secondItem="JVj-dj-Iz8" secondAttribute="bottom" constant="3" id="hTN-Yc-eZR"/>
                                     <constraint firstAttribute="height" constant="400" id="jEx-30-qN3"/>
-                                    <constraint firstItem="Qwn-fr-TaF" firstAttribute="top" secondItem="BFJ-Pm-mJM" secondAttribute="top" id="klS-Zu-kUA"/>
                                     <constraint firstItem="CT9-CK-dqj" firstAttribute="top" secondItem="BFJ-Pm-mJM" secondAttribute="top" constant="9" id="lLK-7l-qbc"/>
                                     <constraint firstItem="7sM-UJ-kWH" firstAttribute="top" secondItem="BFJ-Pm-mJM" secondAttribute="top" constant="188" id="rz6-av-dg3"/>
                                     <constraint firstItem="yz2-Gh-kzt" firstAttribute="top" secondItem="Ph9-wm-1LS" secondAttribute="bottom" constant="2" id="tKl-ub-43B"/>
                                     <constraint firstItem="DCQ-US-EVg" firstAttribute="firstBaseline" secondItem="yz2-Gh-kzt" secondAttribute="firstBaseline" id="wUx-lf-rdu"/>
-                                    <constraint firstItem="JVj-dj-Iz8" firstAttribute="top" secondItem="Qwn-fr-TaF" secondAttribute="bottom" constant="93" id="wbQ-mn-wo1"/>
                                     <constraint firstItem="CT9-CK-dqj" firstAttribute="centerX" secondItem="BFJ-Pm-mJM" secondAttribute="centerX" id="xUZ-3i-nIG"/>
                                     <constraint firstItem="CT9-CK-dqj" firstAttribute="centerX" secondItem="yz2-Gh-kzt" secondAttribute="centerX" id="zGD-cN-CmF"/>
                                 </constraints>
@@ -404,7 +402,7 @@
     <resources>
         <image name="CloseButton" width="15" height="15"/>
         <image name="PriceButton" width="11" height="24"/>
-        <image name="USATodayLogo" width="425" height="266"/>
+        <image name="不喜欢" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="P1M-ZD-kD3"/>

@@ -18,8 +18,9 @@ class SearchResultCell: UITableViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     let selectedView = UIView(frame: CGRect.zero)
-    selectedView.backgroundColor = UIColor(red: 20/255, green: 160/255,
-                                           blue: 160/255, alpha: 0.5)
+    //change color for press down
+    selectedView.backgroundColor = UIColor(red: 188/255, green: 188/255,
+                                           blue: 188/255, alpha: 0.5)
     selectedBackgroundView = selectedView
   }
 
@@ -38,7 +39,7 @@ class SearchResultCell: UITableViewCell {
       artistNameLabel.text = String(format: NSLocalizedString("ARTIST_NAME_LABEL_FORMAT", comment: "Format for artist name label"), searchResult.artistName, searchResult.kindForDisplay())
     }
     
-    artworkImageView.image = UIImage(named: "Placeholder")
+    artworkImageView.image = UIImage(named: "37")
     if let smallURL = URL(string: searchResult.artworkSmallURL) {
       downloadTask = artworkImageView.loadImage(url: smallURL)
     }

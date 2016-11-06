@@ -29,10 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func customizeAppearance() {
-    let barTintColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
+    //search bar color
+    let barTintColor = UIColor(red: 255/255, green: 139/255, blue: 111/255, alpha: 1)
     UISearchBar.appearance().barTintColor = barTintColor
     
-    window!.tintColor = UIColor(red: 10/255, green: 80/255, blue: 80/255, alpha: 1)
+    window!.tintColor = UIColor(red: 255/255, green: 129/255, blue: 98/255, alpha: 1)
   }
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {

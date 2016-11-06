@@ -62,7 +62,12 @@ class Search {
             }
             
         }
-        self.state = .results(searchResults)
+        if searchResults.isEmpty {
+            self.state = .noResults
+        } else {
+            //searchResults.sort(by: <)
+            self.state = .results(searchResults)
+        }
       }
         
       else {
@@ -304,11 +309,12 @@ class Search {
         searchResult.name = dictionary["title"] as! String
         searchResult.artistName = (dictionary["author"] as? NSArray)?[0] as! String
         searchResult.genre = dictionary["summary"] as! String
-        searchResult.tagNameLabel = "Summary:"
-        searchResult.typeNameLabel = "Rating:"
+        searchResult.tagNameLabel = "介绍:"
+        searchResult.typeNameLabel = "评分:"
         searchResult.kind = (dictionary["rating"] as? NSDictionary)?["average"] as! String
         searchResult.artworkSmallURL = dictionary["image"] as! String
         searchResult.artworkLargeURL = dictionary["image"] as! String
+        searchResult.storeURL = dictionary["alt"] as! String
         return searchResult
     }
     
