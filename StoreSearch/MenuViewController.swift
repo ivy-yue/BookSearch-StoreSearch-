@@ -1,9 +1,9 @@
 //
 //  MenuViewController.swift
-//  StoreSearch
+//  BookSearch
 //
-//  Created by Matthijs on 16/08/2016.
-//  Copyright © 2016 Razeware. All rights reserved.
+//  Created by wangyue on 2016/11/4.
+//  Copyright © 2016年 Razeware. All rights reserved.
 //
 
 import UIKit

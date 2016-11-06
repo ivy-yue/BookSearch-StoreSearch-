@@ -1,10 +1,11 @@
 //
 //  DetailViewController.swift
-//  StoreSearch
+//  BookSearch
 //
-//  Created by Matthijs on 10/08/2016.
-//  Copyright © 2016 Razeware. All rights reserved.
+//  Created by wangyue on 2016/11/4.
+//  Copyright © 2016年 Razeware. All rights reserved.
 //
+
 
 import UIKit
 import MessageUI
@@ -51,7 +52,7 @@ class DetailViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.tintColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
+    view.tintColor = UIColor(red: 255/255, green: 215/255, blue: 0/255, alpha: 1)
     popupView.layer.cornerRadius = 10
     
     if isPopUp {

@@ -2,10 +2,9 @@
 //  AppDelegate.swift
 //  StoreSearch
 //
-//  Created by Matthijs on 04/08/2016.
-//  Copyright © 2016 Razeware. All rights reserved.
+//  Created by wangyue on 2016/11/6.
+//  Copyright © 2016年 Razeware. All rights reserved.
 //
-
 import UIKit
 
 @UIApplicationMain
