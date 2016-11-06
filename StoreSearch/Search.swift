@@ -40,9 +40,29 @@ class Search {
       state = .loading
       //..
       let url = iTunesURL(searchText: text, category: category)
-      
-      let session = URLSession.shared
-      dataTask = session.dataTask(with: url, completionHandler: {
+      if category.entityName == "Basic" {
+        //testXML(url: url)
+        
+        //BBBBBBIIIIIIGGGGGGG PPPPRRRROOO
+        let xmlData = try! Data(contentsOf: url)
+        let doc:GDataXMLDocument = try! GDataXMLDocument(data:xmlData, options : 0)
+        let users = try! doc.nodes(forXPath: "//BookData", namespaces:nil) as! [GDataXMLElement]
+        var searchResults: [SearchResult] = []
+        for user in users {
+            var searchResult: SearchResult?
+            searchResult = parseXML(user: user)
+                
+            if let result = searchResult {
+                searchResults.append(result)
+            }
+            
+        }
+        self.state = .results(searchResults)
+      }
+        
+      else {
+        let session = URLSession.shared
+        dataTask = session.dataTask(with: url, completionHandler: {
         data, response, error in
         
         //self.state = .notSearchedYet
@@ -83,15 +103,31 @@ class Search {
                 }
                 success = true
             }
-
             
+        }
+        
+        else if category.entityName == "Book" {
+            if let httpResponse = response as? HTTPURLResponse,
+                httpResponse.statusCode == 200,
+                let jsonData = data,
+                let jsonDictionary = self.parseBook(json: jsonData) {
+                var searchResults = self.parseBook(dictionary: jsonDictionary)
+                if searchResults.isEmpty {
+                    self.state = .noResults
+                } else {
+                    //searchResults.sort(by: <)
+                    self.state = .results(searchResults)
+                }
+                success = true
+            }
+
         }
         
         DispatchQueue.main.async {
           UIApplication.shared.isNetworkActivityIndicatorVisible = false
           completion(success)
         }
-      })
+      })}
       dataTask?.resume()
     }
   }
@@ -115,16 +151,16 @@ class Search {
         //
         urlString = String(format:"http://usatoday30.usatoday.com/api/books/ThisWeek")
     }
-    else if entityName == "Basic" {
+    else if entityName == "Book" {
+        //how tp get data from its title
+        urlString = String(format:"https://api.douban.com/v2/book/isbn/%@",escapedSearchText)
+    }
+    else  {
         //get isbn info
         //XML
         urlString = String(format:"http://isbndb.com/api/books.xml?access_key=66QFN6TP&index1=title&value1=%@",escapedSearchText)
     }
-    else {
-        //how tp get data from its title
-        urlString = String(format:"https://api.douban.com/v2/book")
-    }
-    
+
     
     let url = URL(string: urlString)
     print("URL: \(url!)")
@@ -155,22 +191,7 @@ class Search {
       if let resultDict = resultDict as? [String: Any] {
         
         var searchResult: SearchResult?
-        /*
-        if let wrapperType = resultDict["wrapperType"] as? String {
-          switch wrapperType {
-          case "track":
-            searchResult = parse(track: resultDict)
-          case "audiobook":
-            searchResult = parse(audiobook: resultDict)
-          case "software":
-            searchResult = parse(software: resultDict)
-          default:
-            break
-          }
-        } else if
-        let kind = resultDict["kind"] as? String, kind == "ebook" {
-          searchResult = parse(ebook: resultDict)
-        }*/
+
         searchResult = parse(ebook: resultDict)
         
         if let result = searchResult {
@@ -181,65 +202,7 @@ class Search {
     
     return searchResults
   }
-  /*
-  private func parse(track dictionary: [String: Any]) -> SearchResult {
-    let searchResult = SearchResult()
-    
-    searchResult.name = dictionary["trackName"] as! String
-    searchResult.artistName = dictionary["artistName"] as! String
-    searchResult.artworkSmallURL = dictionary["artworkUrl60"] as! String
-    searchResult.artworkLargeURL = dictionary["artworkUrl100"] as! String
-    searchResult.storeURL = dictionary["trackViewUrl"] as! String
-    searchResult.kind = dictionary["kind"] as! String
-    searchResult.currency = dictionary["currency"] as! String
-    
-    if let price = dictionary["trackPrice"] as? Double {
-      searchResult.price = price
-    }
-    if let genre = dictionary["primaryGenreName"] as? String {
-      searchResult.genre = genre
-    }
-    return searchResult
-  }
-  
-  private func parse(audiobook dictionary: [String: Any]) -> SearchResult {
-    let searchResult = SearchResult()
-    searchResult.name = dictionary["collectionName"] as! String
-    searchResult.artistName = dictionary["artistName"] as! String
-    searchResult.artworkSmallURL = dictionary["artworkUrl60"] as! String
-    searchResult.artworkLargeURL = dictionary["artworkUrl100"] as! String
-    searchResult.storeURL = dictionary["collectionViewUrl"] as! String
-    searchResult.kind = "audiobook"
-    searchResult.currency = dictionary["currency"] as! String
-    
-    if let price = dictionary["collectionPrice"] as? Double {
-      searchResult.price = price
-    }
-    if let genre = dictionary["primaryGenreName"] as? String {
-      searchResult.genre = genre
-    }
-    return searchResult
-  }
-  
-  private func parse(software dictionary: [String: Any]) -> SearchResult {
-    let searchResult = SearchResult()
-    searchResult.name = dictionary["trackName"] as! String
-    searchResult.artistName = dictionary["artistName"] as! String
-    searchResult.artworkSmallURL = dictionary["artworkUrl60"] as! String
-    searchResult.artworkLargeURL = dictionary["artworkUrl100"] as! String
-    searchResult.storeURL = dictionary["trackViewUrl"] as! String
-    searchResult.kind = dictionary["kind"] as! String
-    searchResult.currency = dictionary["currency"] as! String
-    
-    if let price = dictionary["price"] as? Double {
-      searchResult.price = price
-    }
-    if let genre = dictionary["primaryGenreName"] as? String {
-      searchResult.genre = genre
-    }
-    return searchResult
-  }
-  */
+
   private func parse(ebook dictionary: [String: Any]) -> SearchResult {
     let searchResult = SearchResult()
     searchResult.name = dictionary["trackName"] as! String
@@ -249,6 +212,8 @@ class Search {
     searchResult.storeURL = dictionary["trackViewUrl"] as! String
     searchResult.kind = dictionary["kind"] as! String
     searchResult.currency = dictionary["currency"] as! String
+    searchResult.tagNameLabel = "Tags:"
+    searchResult.typeNameLabel = "Type:"
     
     if let price = dictionary["price"] as? Double {
       searchResult.price = price
@@ -277,19 +242,7 @@ class Search {
         }
         
         var searchResults: [SearchResult] = []
-        /*
-        for book_detail in array {
-            if let resultDict = book_detail as? [String: Any] {
-                
-                var searchResult: SearchResult?
-                searchResult = parseChart(chart: resultDict)
-                
-                if let result = searchResult {
-                    searchResults.append(result)
-                }
-            }
-        }
-        */
+
         for temp in 0 ... 20 {
             if let resultDict = array[temp] as? [String: Any] {
                 
@@ -310,14 +263,129 @@ class Search {
         searchResult.name = dictionary["Title"] as! String
         searchResult.artistName = dictionary["Author"] as! String
         searchResult.genre = dictionary["BriefDescription"] as! String
-        searchResult.tagNameLabel = "Description"
+        searchResult.tagNameLabel = "Brief:"
+        searchResult.typeNameLabel = "ISBN:"
         searchResult.kind = dictionary["ISBN"] as! String
+        //searchResult.artworkSmallURL = dictionary["TitleAPIUrl"] as! String
         
         return searchResult
     }
     
-    //Reviews
+   
+    //Book
+    private func parseBook(json data: Data) -> [String: Any]? {
+        do {
+            return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        } catch {
+            print("JSON Error: \(error)")
+            return nil
+        }
+    }
     
+    private func parseBook(dictionary: [String: Any]) -> [SearchResult] {
+
+        var searchResults: [SearchResult] = []
+        var searchResult: SearchResult?
+        searchResult = parseBook(chart: dictionary)
+        if let result = searchResult {
+            searchResults.append(result)
+        }
+        return searchResults
+        
+    }
     
+    private func parseBook(chart dictionary:[String: Any]) -> SearchResult {
+        let searchResult = SearchResult()
+        searchResult.name = dictionary["title"] as! String
+        searchResult.artistName = (dictionary["author"] as? NSArray)?[0] as! String
+        searchResult.genre = dictionary["summary"] as! String
+        searchResult.tagNameLabel = "Summary:"
+        searchResult.typeNameLabel = "Rating:"
+        searchResult.kind = (dictionary["rating"] as? NSDictionary)?["average"] as! String
+        searchResult.artworkSmallURL = dictionary["image"] as! String
+        searchResult.artworkLargeURL = dictionary["image"] as! String
+        return searchResult
+    }
+    
+    //XML get isbn
+    //Basic
+    func testXML(url:URL) -> SearchResult {
+        //获取xml文件路径
+        let searchResult = SearchResult()
+        let xmlData = try! Data(contentsOf: url)
+        
+        //可以转换为字符串输出查看
+        //print(String(data:xmlData, encoding:String.Encoding.utf8))
+        
+        //使用NSData对象初始化文档对象
+        //这里的语法已经把OC的初始化函数直接转换过来了
+        let doc:GDataXMLDocument = try! GDataXMLDocument(data:xmlData, options : 0)
+        
+        //获取Users节点下的所有User节点，显式转换为element类型编译器就不会警告了
+        //let users = doc.rootElement().elements(forName: "User") as! [GDataXMLElement]
+        
+        //通过XPath方式获取Users节点下的所有User节点，在路径复杂时特别方便
+        let users = try! doc.nodes(forXPath: "//BookData", namespaces:nil) as! [GDataXMLElement]
+        
+        for user in users {
+            //User节点的id属性
+            let uid = user.attribute(forName: "book_id").stringValue()
+            let uisbn = user.attribute(forName: "isbn").stringValue()
+            let uisbn13 = user.attribute(forName: "isbn13").stringValue()
+            //获取name节点元素  -> 获取 title
+            let nameElement = user.elements(forName: "Title")[0] as! GDataXMLElement
+            //获取元素的值 -> 获取title下的元素
+            let uname =  nameElement.stringValue()
+            
+            //获取name节点元素  -> 获取 title
+            let authorElement = user.elements(forName: "AuthorsText")[0] as! GDataXMLElement
+            //获取元素的值 -> 获取title下的元素
+            let author =  authorElement.stringValue()
+            //输出调试信息
+            //print("User: uid:\(uid!),uisbn:\(uisbn!),uisbn13:\(uisbn13!),uname:\(uname!),author:\(author!)")
+            searchResult.name = uname!
+            searchResult.artistName = author!
+            searchResult.genre = uisbn!
+            searchResult.tagNameLabel = "isbn:"
+            searchResult.typeNameLabel = "isbn13:"
+            searchResult.kind = uisbn13!
+            
+        }
+        return searchResult
+    }
+    private func parseXML( user: GDataXMLElement) -> SearchResult {
+        let searchResult = SearchResult()
+        //User节点的id属性
+        let uid = user.attribute(forName: "book_id").stringValue()
+        let uisbn = user.attribute(forName: "isbn").stringValue()
+        let uisbn13 = user.attribute(forName: "isbn13").stringValue()
+        //获取name节点元素  -> 获取 title
+        let nameElement = user.elements(forName: "Title")[0] as! GDataXMLElement
+        //获取元素的值 -> 获取title下的元素
+        let uname =  nameElement.stringValue()
+        
+        //获取name节点元素  -> 获取 title
+        let authorElement = user.elements(forName: "AuthorsText")[0] as! GDataXMLElement
+        //获取元素的值 -> 获取title下的元素
+        let author =  authorElement.stringValue()
+        //输出调试信息
+        //print("User: uid:\(uid!),uisbn:\(uisbn!),uisbn13:\(uisbn13!),uname:\(uname!),author:\(author!)")
+        searchResult.name = uname!
+        searchResult.artistName = author!
+        searchResult.genre = uisbn!
+        searchResult.tagNameLabel = "isbn:"
+        searchResult.typeNameLabel = "isbn13:"
+        searchResult.kind = uisbn13!
+        return searchResult
+    }
+
     
 }
+
+
+
+
+
+
+
+

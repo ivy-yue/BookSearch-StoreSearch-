@@ -18,6 +18,7 @@ class DetailViewController: UIViewController {
   @IBOutlet weak var genreLabel: UILabel!
   @IBOutlet weak var priceButton: UIButton!
   @IBOutlet weak var tagNameLabel: UILabel!
+  @IBOutlet weak var typeNameLabel: UILabel!
     
   var searchResult: SearchResult! {
     didSet {
@@ -96,6 +97,8 @@ class DetailViewController: UIViewController {
     
     kindLabel.text = searchResult.kindForDisplay()
     genreLabel.text = searchResult.genre
+    tagNameLabel.text = searchResult.tagNameLabel //default: tags charts: description
+    typeNameLabel.text = searchResult.typeNameLabel
     
     let formatter = NumberFormatter()
     formatter.numberStyle = .currency

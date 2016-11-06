@@ -26,7 +26,7 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="hm4-bL-Blv"/>
                                 </connections>
                             </tableView>
-                            <searchBar contentMode="redraw" placeholder="App name, artist, song, album, e-book" translatesAutoresizingMaskIntoConstraints="NO" id="68e-CH-NSs">
+                            <searchBar contentMode="redraw" placeholder="Best-sellers, isbn, book name, e-book" translatesAutoresizingMaskIntoConstraints="NO" id="68e-CH-NSs">
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="QXF-df-sgz"/>
@@ -40,9 +40,9 @@
                                             <rect key="frame" x="38" y="7" width="300" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <segments>
-                                                <segment title="All"/>
-                                                <segment title="Music"/>
-                                                <segment title="Software"/>
+                                                <segment title="Charts"/>
+                                                <segment title="ISBN"/>
+                                                <segment title="Books"/>
                                                 <segment title="E-books"/>
                                             </segments>
                                             <connections>
@@ -160,13 +160,15 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BFJ-Pm-mJM" userLabel="Pop-up View">
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qwn-fr-TaF" userLabel="Close Button">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qwn-fr-TaF" userLabel="Close Button">
+                                        <frame key="frameInset" minX="12" minY="6" width="15" height="22"/>
                                         <state key="normal" image="CloseButton"/>
                                         <connections>
                                             <action selector="close" destination="bMo-v0-teP" eventType="touchUpInside" id="j3u-cY-uit"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xOH-GC-bHs">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xOH-GC-bHs">
+                                        <frame key="frameInset" minX="208" minY="370" width="80" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="62F-8O-Dr5"/>
                                             <constraint firstAttribute="width" constant="80" id="zjw-3O-wus"/>
@@ -178,7 +180,7 @@
                                             <action selector="openInStore" destination="bMo-v0-teP" eventType="touchUpInside" id="8XO-gM-Jxj"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CT9-CK-dqj">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="USATodayLogo" translatesAutoresizingMaskIntoConstraints="NO" id="CT9-CK-dqj">
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="BIh-ej-C5w">
                                                 <variation key="heightClass=regular-widthClass=regular" constant="180"/>
@@ -223,7 +225,8 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         </variation>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tags:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZYp-Zw-Fg6">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Tags:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZYp-Zw-Fg6">
+                                        <frame key="frameInset" minX="10" minY="188" width="75" height="150"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -231,7 +234,8 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         </variation>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre Value" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7sM-UJ-kWH">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Genre Value" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7sM-UJ-kWH">
+                                        <frame key="frameInset" minX="100" minY="188" width="160" height="150"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="150" id="zGJ-Zs-eV8"/>
                                         </constraints>
@@ -313,6 +317,7 @@
                         <outlet property="popupView" destination="BFJ-Pm-mJM" id="Pd9-Sy-FKJ"/>
                         <outlet property="priceButton" destination="xOH-GC-bHs" id="Zzp-C1-RTv"/>
                         <outlet property="tagNameLabel" destination="ZYp-Zw-Fg6" id="9vl-IX-a8O"/>
+                        <outlet property="typeNameLabel" destination="DCQ-US-EVg" id="Llb-Ir-bHp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bQG-Qa-K5E" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -399,6 +404,7 @@
     <resources>
         <image name="CloseButton" width="15" height="15"/>
         <image name="PriceButton" width="11" height="24"/>
+        <image name="USATodayLogo" width="425" height="266"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="P1M-ZD-kD3"/>

@@ -24,6 +24,7 @@ class SearchResult {
   var price = 0.0
   var genre = ""
   var tagNameLabel = ""
+  var typeNameLabel = ""
   
   func kindForDisplay() -> String {
     return displayNamesForKind[kind] ?? kind
