@@ -81,7 +81,7 @@ class Search {
         if let error = error as? NSError, error.code == -999 {
           return   // Search was cancelled
         }
-        //..
+        
         if category.entityName == "ebook" {
             if let httpResponse = response as? HTTPURLResponse,
                 httpResponse.statusCode == 200,
@@ -277,11 +277,30 @@ class Search {
         searchResult.typeNameLabel = "ISBN:"
         searchResult.kind = dictionary["ISBN"] as! String
         //searchResult.artworkSmallURL = dictionary["TitleAPIUrl"] as! String
+        //searchResult.storeURL = jumptoitunes(isbn: searchResult.kind)
         
         return searchResult
     }
     
-   
+    
+    //mashup
+//    private func jumptoitunes ( isbn: String ) -> String {
+// 
+//        let locale = Locale.autoupdatingCurrent
+//        let language = locale.identifier
+//        let countryCode = locale.regionCode ?? "en_US"
+//        let escapedSearchText = isbn.addingPercentEncoding(
+//            withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+//        let urlString = String(format: "https://itunes.apple.com/search?term=%@&limit=20&entity=ebook&lang=%@&country=%@", escapedSearchText, language, countryCode)
+//        let url = URL(string: urlString)
+//        
+//        let link = parse(json: ebookdata)
+//        return link
+//        
+//    }
+    
+    
+    
     //Book
     private func parseBook(json data: Data) -> [String: Any]? {
         do {
@@ -329,10 +348,9 @@ class Search {
         //print(String(data:xmlData, encoding:String.Encoding.utf8))
         
         //使用NSData对象初始化文档对象
-        //这里的语法已经把OC的初始化函数直接转换过来了
         let doc:GDataXMLDocument = try! GDataXMLDocument(data:xmlData, options : 0)
         
-        //获取Users节点下的所有User节点，显式转换为element类型编译器就不会警告了
+        //获取节点下的所有子节点，显式转换为element类型
         //let users = doc.rootElement().elements(forName: "User") as! [GDataXMLElement]
         
         //通过XPath方式获取Users节点下的所有User节点，在路径复杂时特别方便
